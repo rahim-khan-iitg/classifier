@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI Image Classifier</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+
+<body onload="attch_func()">
+
+  <div class="container  d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="mb-3" style="width:auto;">
+      <div style="border-radius: 10px; border:5px solid white;">
+        <img class="rounded mx-auto d-block" alt="..." id="image" style="max-width: 500px; max-height: 500px;" src="{{url}}">
+      </div>
+      <div style="display: flex;justify-content: center; align-items: center; font-size: x-large;">
+        <label>{{result}}</label>
+      </div>
+      <label for="formFile" class="form-label"></label>
+      <form action="{% url 'home'%}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!-- <input class="form-control" type="file" id="formFile" onchange="loadImage(event)" name="file"> -->
+        {{form.as_table}}
+        <button class="btn btn-success mt-1" type="submit">Analyse</button>
+      </form>
+    </div>
+  </div>
+  <script>
+    let attch_func = function () {
+      let img_field = document.getElementById("id_image")
+      img_field.setAttribute("class", "form-control")
+      img_field.setAttribute("id", "formFile")
+      img_field.setAttribute("onchange", "loadImage(event)")
+      img_field.style.maxHeight = "500px"
+      img_field.style.maxWidth = "500px"
+      img_field.setAttribute("name", "image")
+    }
+    let loadImage = function (event) {
+      let image = document.getElementById('image');
+      image.src = URL.createObjectURL(event.target.files[0]);
+    }
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+
+</html>
